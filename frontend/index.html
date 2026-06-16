@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="AI-Powered Phishing Detection System using BHHO and Random Forest.">
+</head>
+
+<body>
+    <!-- Logo Bar -->
+    <div class="logo-bar">
+        <div class="logo-brand">
+            <img src="logo.png" alt="HawkEye Logo" class="logo-icon" />
+            <span class="logo-text">Hawk<span class="logo-highlight">Eye</span></span>
+        </div>
+    </div>
+
+    <!-- No background gradient blobs -->
+
+    <main class="glass-container">
+        <header>
+            <h1>Hawk<span class="highlight">Eye</span></h1>
+            <p class="subtitle">Phishing Attack Detection</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-target="email-sec">Email</button>
+            <button class="tab-btn" data-target="sms-sec">SMS</button>
+            <button class="tab-btn" data-target="url-sec">URL</button>
+        </div>
+
+        <section id="email-sec" class="tab-content active">
+            <div class="input-group">
+                <label for="email-input">Scan Email Content</label>
+                <textarea id="email-input" placeholder="Paste the email subject and body here..."></textarea>
+            </div>
+            <div class="button-group">
+                <button class="clear-btn" onclick="clearInput('email')">Clear Text</button>
+                <button class="scan-btn" onclick="analyze('email')">Analyze Email</button>
+            </div>
+        </section>
+
+        <section id="sms-sec" class="tab-content">
+            <div class="input-group">
+                <label for="sms-input">Scan SMS Message</label>
+                <textarea id="sms-input" placeholder="Paste the SMS text here..."></textarea>
+            </div>
+            <div class="button-group">
+                <button class="clear-btn" onclick="clearInput('sms')">Clear Text</button>
+                <button class="scan-btn" onclick="analyze('sms')">Analyze SMS</button>
+            </div>
+        </section>
+
+        <section id="url-sec" class="tab-content">
+            <div class="input-group">
+                <label for="url-input">Scan URL</label>
+                <input type="text" id="url-input" placeholder="e.g., https://secure-login-update.com">
+            </div>
+            <div class="button-group">
+                <button class="clear-btn" onclick="clearInput('url')">Clear Text</button>
+                <button class="scan-btn" onclick="analyze('url')">Analyze URL</button>
+            </div>
+        </section>
+
+        <div id="result-container" class="result-box hidden">
+            <div class="loader-container hidden" id="loader-container">
+                <div class="loader" id="loader"></div>
+            </div>
+            <div id="result-content" class="hidden">
+                <div class="status-icon" id="status-icon"></div>
+                <h2 id="prediction-text">Analysis Complete</h2>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" id="confidence-fill"></div>
+                </div>
+                <p class="confidence-text">Prediction Certainty Level: <span id="confidence-value">--</span>%</p>
+
+                <div id="keywords-container" class="hidden">
+                    <p class="keywords-title">Suspicious Keywords Detected:</p>
+                    <div class="keywords-list" id="keywords-list">
+                        <!-- Keyword tags will be injected here via JS -->
+                    </div>
+                </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

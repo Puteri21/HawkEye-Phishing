@@ -1,0 +1,22 @@
+# Datasets
+*.csv
+*.arff
+
+# Huge root-level models (keep the small ones in models/ folder)
+/*.pkl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Environments
+venv/
+env/
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,436 @@
+:root {
+    --bg-color: #050505;  /* Deep Black Background */
+    --glass-bg: rgba(20, 20, 20, 0.8); /* Dark Glass */
+    --glass-border: rgba(255, 215, 0, 0.2); /* Gold Border Tint */
+    --text-main: #ffffff;  /* Pure White Text */
+    --text-muted: #a1a1aa; /* Light Gray */
+    --primary: #ffd700; /* Gold Yellow (Logo Eye Ball) */
+    --primary-hover: #e6c200; /* Darker Gold for hover */
+    --danger: #ff4444; /* Red for Phishing */
+    --success: #10b981;  /* Green for Safe */
+    --accent-1: #ffffff; /* White highlights */
+    --accent-2: #fbbf24; /* Amber Gold */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding-top: 70px; /* space for logo bar */
+}
+
+/* ── Logo Bar ── */
+.logo-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 14px 32px;
+    background: rgba(5, 5, 5, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.logo-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    /* Beautiful Gold Shadow matching the eye ball */
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+    transition: filter 0.3s ease;
+}
+
+.logo-icon:hover {
+    /* Bright White/Gold glow on hover */
+    filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.8));
+}
+
+.logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-main);
+}
+
+.logo-highlight {
+    color: var(--primary); /* Solid Gold Yellow */
+}
+
+/* Glassmorphism Container */
+.glass-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 40px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.highlight {
+    color: var(--primary); /* Solid Gold Yellow */
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 8px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background: rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 6px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: var(--text-main);
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Sections */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+textarea, input[type="text"] {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    color: var(--text-main);
+    padding: 16px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    resize: none;
+}
+
+textarea {
+    height: 120px;
+}
+
+textarea:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Buttons */
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.clear-btn {
+    width: 30%;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-main);
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.scan-btn {
+    flex: 1;
+    background: var(--primary); /* Solid Gold */
+    color: #000000; /* Black text for perfect contrast on Gold */
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700; /* Slightly bolder text */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 14px 0 rgba(255, 215, 0, 0.3); /* Gold shadow */
+}
+
+.scan-btn:hover {
+    transform: translateY(-2px);
+    background: var(--primary-hover); /* Darker Gold on hover */
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5); /* Stronger gold shadow */
+}
+
+.scan-btn:active {
+    transform: translateY(0);
+}
+
+/* Results */
+.result-box {
+    margin-top: 24px;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.result-box.hidden {
+    display: none;
+}
+
+/* Loader */
+.loader-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255,255,255,0.1);
+    border-left-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+.loader-container::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    color: var(--primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    animation: pulseText 1s infinite alternate;
+}
+
+@keyframes pulseText {
+    from { opacity: 0.6; }
+    to { opacity: 1; text-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Result States */
+.status-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.result-box.safe {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.result-box.safe #prediction-text {
+    color: var(--success);
+}
+
+.result-box.safe .status-icon {
+    background: var(--success);
+    color: white;
+}
+.result-box.safe .status-icon::after { content: "✓"; }
+
+.result-box.phishing {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.result-box.phishing #prediction-text {
+    color: var(--danger);
+}
+
+.result-box.phishing .status-icon {
+    background: var(--danger);
+    color: white;
+}
+.result-box.phishing .status-icon::after { content: "!"; }
+
+.confidence-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    margin: 16px 0 8px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.result-box.safe .confidence-fill { background: var(--success); }
+.result-box.phishing .confidence-fill { background: var(--danger); }
+
+.confidence-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Keywords */
+#keywords-container {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(239, 68, 68, 0.2);
+    animation: slideUp 0.4s ease forwards;
+}
+
+.keywords-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.keywords-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.flagged-list li {
+    background: rgba(255, 51, 51, 0.15);
+    border: 1px solid rgba(255, 51, 51, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #ff8080;
+}
+
+/* Modal CSS removed */
+
+.keyword-tag {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);
+    transition: all 0.3s ease;
+}
+
+.keyword-tag:hover {
+    background: rgba(239, 68, 68, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
