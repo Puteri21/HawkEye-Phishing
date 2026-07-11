@@ -123,14 +123,87 @@ def predict(input_text: str, prefix: str):
     # ---------------------------------------------------------------
     flagged_keywords = []
     if prediction == 1:
-        try:
-            feature_names = suite['vectorizer'].get_feature_names_out()
-            non_zero_input_indices = np.where(features[0] > 0)[0]          # words user typed
-            flagged_indices = np.intersect1d(non_zero_input_indices, selected_indices)  # overlap with BHHO
-            flagged_keywords = [feature_names[i] for i in flagged_indices]
-            flagged_keywords = flagged_keywords[:5]  # show max 5 keywords
-        except Exception as e:
-            print(f"Keyword extraction error: {e}")
+        if prefix == 'url':
+            import re
+            url_lower = input_text.lower().strip()
+            
+            # Extract domain and path
+            domain = ""
+            path = ""
+            match = re.search(r'https?://([^/]+)(.*)', url_lower)
+            if match:
+                domain = match.group(1)
+                path = match.group(2)
+            else:
+                domain = url_lower.split('/')[0]
+                if '/' in url_lower:
+                    path = url_lower[url_lower.find('/'):]
+            
+            # 1. Gather Rule-Based Signals
+            signals = []
+            if url_lower.startswith('http://'):
+                signals.append('Insecure link (http)')
+            if re.search(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', domain):
+                signals.append('Numerical IP address')
+                
+            risky_exts = ['.vip', '.top', '.xyz', '.cc', '.info', '.work', '.online', '.club', '.gq', '.cf', '.tk', '.ml', '.ga', '.fit', '.click']
+            for ext in risky_exts:
+                if domain.endswith(ext) or f'{ext}.' in domain or f'{ext}/' in domain:
+                    signals.append(f'Risky extension ({ext})')
+                    break
+                    
+            domain_name = domain.split('.')[0]
+            if re.search(r'[a-zA-Z]', domain_name) and re.search(r'\d', domain_name):
+                signals.append('Suspicious domain name')
+                
+            brands = ['cimb', 'maybank', 'shopee', 'lazada', 'grab', 'lhdn', 'saps', 'spotify', 'paypal', 'apple', 'google']
+            for brand in brands:
+                if brand in domain:
+                    official = False
+                    if brand == 'shopee' and ('shopee.com' in domain or 'shopee.co' in domain):
+                        official = True
+                    elif brand == 'maybank' and 'maybank2u.com' in domain:
+                        official = True
+                    elif brand == 'cimb' and 'cimbclicks.com' in domain:
+                        official = True
+                    elif brand == 'lazada' and 'lazada.co' in domain:
+                        official = True
+                    elif brand == 'spotify' and 'spotify.com' in domain:
+                        official = True
+                    elif brand == 'paypal' and 'paypal.com' in domain:
+                        official = True
+                    elif brand == 'google' and 'google.com' in domain:
+                        official = True
+                    elif brand == 'apple' and 'apple.com' in domain:
+                        official = True
+                        
+                    if not official:
+                        signals.append(f'Unofficial {brand.capitalize()} link')
+                        
+            if path:
+                path_clean = path.replace('/', '')
+                if len(path_clean) > 8 and re.search(r'[a-zA-Z]', path_clean) and re.search(r'\d', path_clean):
+                    signals.append('Random path code')
+                    
+            if not signals:
+                signals = ['Suspicious URL pattern']
+                
+            # 2. Gather Extracted Keyword Tokens
+            tokens = re.split(r'[^a-zA-Z0-9]', url_lower)
+            suspicious_words = {'cimb', 'clicks', 'maybank', 'maybank2u', 'shopee', 'lazada', 'login', 'verify', 'verification', 'update', 'secured', 'account', 'security', 'vip', 'xyz', 'top'}
+            extracted_keywords = [t for t in tokens if t in suspicious_words]
+            
+            # Combine both (Signals first, then raw keywords)
+            flagged_keywords = list(dict.fromkeys(signals + extracted_keywords))[:7]
+        else:
+            try:
+                feature_names = suite['vectorizer'].get_feature_names_out()
+                non_zero_input_indices = np.where(features[0] > 0)[0]          # words user typed
+                flagged_indices = np.intersect1d(non_zero_input_indices, selected_indices)  # overlap with BHHO
+                flagged_keywords = [feature_names[i] for i in flagged_indices]
+                flagged_keywords = flagged_keywords[:5]  # show max 5 keywords
+            except Exception as e:
+                print(f"Keyword extraction error: {e}")
 
     # ---------------------------------------------------------------
     # STEP 6: SEND RESULT BACK TO WEBSITE (as JSON)
