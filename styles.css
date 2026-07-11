@@ -434,3 +434,43 @@ textarea:focus, input[type="text"]:focus {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
 }
+
+/* ── Mobile Responsiveness (Phones) ── */
+@media (max-width: 480px) {
+    body {
+        padding-top: 60px;
+    }
+    
+    .logo-bar {
+        padding: 10px 16px;
+    }
+    
+    .logo-text {
+        font-size: 1.1rem;
+    }
+    
+    .glass-container {
+        padding: 24px 16px;
+        width: 95%;
+        border-radius: 16px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .tab-btn {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+    
+    textarea, input[type="text"] {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .clear-btn, .scan-btn {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+}
